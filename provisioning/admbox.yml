@@ -1,0 +1,35 @@
+---
+- hosts: all
+  vars:
+    become_method: sudo
+  remote_user: vagrant
+  become: true
+  tasks:
+  - name: Installiere PIP
+    apt: name=python-pip state=latest update_cache=true
+
+  - name: Installiere von Ansible Benötigte Pakete...
+    apt: name={{ item }} state=latest
+    with_items:
+        - gcc-4.8
+        - libssl-dev
+        - libpython2.7-dev
+        - python-paramiko
+        - python-crypto
+        - python-httplib2
+
+  - name: Installiere Ansible
+    pip: name=ansible
+
+  - name: Schreibe /etc/hosts
+    copy:
+        content: |
+                  127.0.0.1 localhost
+                  127.0.1.1 admin-box admin-box
+                  10.10.10.100  web01 web01.lab
+                  ::1     localhost ip6-localhost ip6-loopback
+                  ff02::1 ip6-allnodes
+                  ff02::2 ip6-allrouters
+        dest:     /etc/hosts
+
+  handlers:
