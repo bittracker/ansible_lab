@@ -17,6 +17,7 @@
         - python-paramiko
         - python-crypto
         - python-httplib2
+		- python-markupsafe
 
   - name: Installiere Ansible
     pip: name=ansible
