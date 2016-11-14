@@ -4,35 +4,37 @@
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
+# HINWEIS: jede weitere Box muss im host.txt File im provisioning Ordner
+# mit der IP-Adresse und dem Hostnamen eingetragen werden.
+#
+# Template für eine Neue Box:
+# config.vm.define "<boxname>" do |<boxname>|
+#    bc.vm.box = "debian/jessie64"
+#    bc.vm.hostname = "<boxname>"
+#    bc.vm.network "private_network", ip: "<ipv4_addresse>", virtualbox__intnet: true
+#    bc.vm.provision :shell, path: "provisioning/myprovisioner.sh"
+#  end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-    # Definition der Admin Box
-    config.vm.define "admbox", primary: true do |admbox|
-        admbox.vm.box = "debian/jessie64"
-        admbox.vm.hostname = "admin-box"
-        admbox.vm.provision "ansible" do |ansible|
-            ansible.playbook = "provisioning/admbox.yml"
-        end
-        admbox.vm.network "private_network", ip: "10.10.10.10", virtualbox__intnet: "ansible_lab"
-    end
+  config.vm.define "admbox", primary: true do |admbox|
+    admbox.vm.box = "debian/jessie64"
+    admbox.vm.hostname = "admin-box"
+    admbox.vm.network "private_network", ip: "10.10.10.10", virtualbox__intnet: true
+    admbox.vm.provision :shell, path: "provisioning/myprovisioner.sh"
+  end
 
-
-    # Definition des Webservers
-    config.vm.define "web", primary: false do |web|
-        web.vm.box = "debian/jessie64"
-        web.vm.hostname = "web01"
-        web.vm.network "private_network", ip: "10.10.10.100", virtualbox__intnet: "ansible_lab"
-
-        # Weiterleiten von HTTP und HTTPs
-        web.vm.network "forwarded_port", guest: 80, host: 8080
-        web.vm.network "forwarded_port", guest: 443, host: 1443
-    end
-
-
-  config.vm.box_check_update = false
-
-
-
-
+  config.vm.define "bc" do |bc|
+    bc.vm.box = "debian/jessie64"
+    bc.vm.hostname = "bc-server"
+    bc.vm.network "private_network", ip: "10.10.10.100", virtualbox__intnet: true
+    bc.vm.provision :shell, path: "provisioning/myprovisioner.sh"
+  end
+  config.vm.define "client" do |client|
+    client.vm.box = "debian/jessie64"
+    client.vm.hostname = "client"
+    client.vm.network "private_network", ip: "10.10.10.200", virtualbox__intnet: true
+    client.vm.provision :shell, path: "provisioning/myprovisioner.sh"
+  end
 
 end

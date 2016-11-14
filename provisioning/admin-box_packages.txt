@@ -1,0 +1,13 @@
+tmux
+vim
+vim-scripts
+python-pip
+libpython2.7-dev
+gcc-4.8
+libssl-dev
+python-paramiko
+python-crypto
+python-httplib2
+python-markupsafe
+python-jinja2
+python-yaml
