@@ -55,12 +55,11 @@ fi
 
 echo "Führe ein apt-get update aus..."
 	apt-get update &> /dev/null
-echo "Installiere curl..."
-	apt-get install -yq curl
+
 # Deployment des "Vagrant Insecure Private Keys"
 if [ ! -f $VAGRANT_KEY_PATH ]; then
   echo Lade den Vagrant private Key herunter...
-	curl -s $VAGRANT_KEY_URL -o $VAGRANT_KEY_PATH && chmod 400 $VAGRANT_KEY_PATH && chown vagrant:vagrant $VAGRANT_KEY_PATH
+	wget -q $VAGRANT_KEY_URL -O $VAGRANT_KEY_PATH && chmod 400 $VAGRANT_KEY_PATH && chown vagrant:vagrant $VAGRANT_KEY_PATH
 else
 	echo "HINWEIS: ein id_rsa file exestiert schon das deployment wird übersprungen!"
 fi
