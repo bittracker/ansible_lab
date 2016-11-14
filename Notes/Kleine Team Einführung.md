@@ -82,12 +82,16 @@ Grundlegende Struktur:
   vars:
     ssh_port: 22    # Variabeln die Später verwendet werden können
   remote_user: root # Benutzer der für die SSH Verbindungen von ansible verwendet wird
-  tasks:  # Tasks sind Module die in der hier angegebenen Reihenfolge ausgeführt werden Sie nehemen die Eigentliche Konfiguration vor
+  tasks:  # Tasks führen Module in der  Reihenfolge der Tasks aus. - Sie nehemen die Eigentliche Konfiguration vor
   - name: Installieren von NGINX in der letzten version
     apt: name=nginx state=latest
 
   - name: sicherstellen das Nginx beim Booten gestartet wird
     service: name=nginx state=started enabled=yes
+
+  - name: erstelle vhost
+    template: src="nginx_vhost.conf" dst="/etc/sites-available/vhost.conf"
+    
   handlers:
     - name: restart nginx
       service: name=nginx state=restarted
@@ -126,4 +130,12 @@ Grundlegende Struktur:
      - common # Allgemeiner Kram
      - dbserver
 
+```
+
+## Beispiel Struktur eines kleinen Infrastruktur Projektes mit Ansible
+```
+├── inventory.ini
+├── roles
+│ └── ... die verschiedenen Rollen 
+└── ansible.cfg
 ```
