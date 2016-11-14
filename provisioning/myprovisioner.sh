@@ -53,6 +53,10 @@ ff02::2 ip6-allrouters
 EOF
 fi
 
+echo "Führe ein apt-get update aus..."
+	apt-get update &> /dev/null
+echo "Installiere curl..."
+	apt-get install -yq curl
 # Deployment des "Vagrant Insecure Private Keys"
 if [ ! -f $VAGRANT_KEY_PATH ]; then
   echo Lade den Vagrant private Key herunter...
@@ -64,8 +68,6 @@ fi
 # Instalieren Zusätzlicher Pakete
 if [ -f $PROVISIONDIR/$HOSTNAME\_packages.txt ]; then
 	PKGLIST=$(cat $PROVISIONDIR/$HOSTNAME\_packages.txt |tr -d '\r' | tr '\n' ' ')
-	echo "Führe ein apt-get update aus..."
-	apt-get update &> /dev/null
 	# Sicherstellen das APT keine Prompts öffnet
 	export DEBIAN_FRONTEND="noninteractive" 
 	if [ "$PKGLIST" != "" ]; then
