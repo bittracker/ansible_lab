@@ -78,7 +78,7 @@ else
 fi
 
 # Installation der Management Tools auf den Admin Boxen
-for H in $(cat $PROVISIONDIR/adminboxes.txt)
+for H in $(cat $PROVISIONDIR/adminboxes.txt | tr -d '\r' | tr -d '\n')
 do 
   if [ "$HOSTNAME" == $H ]; then
     echo INFO: bei $HOSTNAME handelt es sich um eine Adminbox!
