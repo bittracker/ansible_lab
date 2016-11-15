@@ -91,11 +91,23 @@ Grundlegende Struktur:
 
   - name: erstelle vhost
     template: src="nginx_vhost.conf" dst="/etc/sites-available/vhost.conf"
-    
+
   handlers:
     - name: restart nginx
       service: name=nginx state=restarted
 ```
+
+## Variablen
+
+### Reihenfolge in der Variablen verarbeitet bzw. beachtet werden
+1. als erstes kommen die sog. `extra` variablen (-e switch über das CLI interface) diese gewinnen immer/sind am dominantisten
+2. dann folgen die `connection` variablen die im inventory definiert werden (ansible_ssh_user, etc)
+3. dann kommen alle Variablen die mittels: CLI switche, plays, rollen und includes definiert werden.
+4. gefolgt von den Variablen die im Inventory definiert sind aber keine `connection` variablen sind.
+5. danach greifen die variablen die `facts` beinhalten.
+6. und am schuluss werden die `defaults`gesetzt sofern definiert.
+
+
 
 ## Rollen
 
@@ -133,9 +145,16 @@ Grundlegende Struktur:
 ```
 
 ## Beispiel Struktur eines kleinen Infrastruktur Projektes mit Ansible
+
 ```
 ├── inventory.ini
 ├── roles
-│ └── ... die verschiedenen Rollen 
+│ └── ... die verschiedenen Rollen
 └── ansible.cfg
 ```
+
+
+# Quelen & Referenzen:
+* [Ansible Docs](https://docs.ansible.com/ansible)
+* [Stackoverflow: What's the difference between defaults and vars in an Ansible role?](https://stackoverflow.com/questions/29127560)
+* [YAML Syntax](https://docs.ansible.com/ansible/YAMLSyntax.html)
