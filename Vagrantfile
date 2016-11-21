@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
   config.vm.define "admbox", primary: true do |admbox|
     admbox.vm.box = "debian/jessie64"
-    admbox.vm.hostname = "admin-box"
+    admbox.vm.hostname = "admbox"
     admbox.vm.network "private_network", ip: "10.10.10.10", virtualbox__intnet: true
     admbox.vm.provision :shell, path: "provisioning/myprovisioner.sh"
   end
