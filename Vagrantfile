@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "bc" do |bc|
     bc.vm.box = "debian/jessie64"
-    bc.vm.hostname = "bc-server"
+    bc.vm.hostname = "bc"
     bc.vm.network "private_network", ip: "10.10.10.100", virtualbox__intnet: true
     bc.vm.provision :shell, path: "provisioning/myprovisioner.sh"
   end
