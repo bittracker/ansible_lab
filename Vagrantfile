@@ -17,7 +17,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
-  config.vm.synced_folder "C:/GatewayUno/share", "/home/vagrant/share/"
+  config.vm.synced_folder "../share", "/home/vagrant/share/", create: true
   config.vm.define "admbox", primary: true do |admbox|
     admbox.vm.box = "debian/jessie64"
     admbox.vm.hostname = "admbox"
