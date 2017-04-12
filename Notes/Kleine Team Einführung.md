@@ -152,6 +152,32 @@ Grundlegende Struktur:
 │ └── ... die verschiedenen Rollen
 └── ansible.cfg
 ```
+### Beispiel Projekt Struktur aus den Ansible Docs
+```
+Example project structure:
+
+site.yml
+webservers.yml
+fooservers.yml
+roles/
+   common/
+     files/
+     templates/
+     tasks/
+     handlers/
+     vars/
+     defaults/
+     meta/
+   webservers/
+     files/
+     templates/
+     tasks/
+     handlers/
+     vars/
+     defaults/
+     meta/
+
+```
 
 
 # Quelen & Referenzen:
